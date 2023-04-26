@@ -1,7 +1,9 @@
 """Tests for models"""
 
 from django.test import TestCase
+
 from django.contrib.auth import get_user_model
+
 
 class ModelTests(TestCase):
     """Test Models."""
@@ -10,7 +12,7 @@ class ModelTests(TestCase):
         """Test creating a user with an email is successful"""
 
         email = "test@example.com"
-        password ='testpassword123'
+        password = 'testpassword123'
 
         user = get_user_model().objects.create_user(
             email=email,
