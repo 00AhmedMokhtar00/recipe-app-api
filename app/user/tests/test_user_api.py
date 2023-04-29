@@ -12,6 +12,7 @@ CREATE_USER_URL = reverse('user:create')
 TOKEN_URL = reverse('user:token')
 ME_URL = reverse('user:me')
 
+
 def create_user(**param):
     """Create and return a new user"""
 
@@ -132,8 +133,8 @@ class PrivateUserApiTest(TestCase):
             password='testpass123',
             name='Test Name'
         )
-        self.client = APIClient
-        self.client.force_authenticate(self, user=self.user)
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.user)
 
     def test_retrieve_profile_success(self):
         """Test retrieving profile for logged in users"""
