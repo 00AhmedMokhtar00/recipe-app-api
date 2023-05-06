@@ -268,7 +268,6 @@ class PrivateRecipeAPITests(TestCase):
             ).exists()
             self.assertTrue(exists)
 
-
     def test_create_recipe_with_existing_tag(self):
         """Test creating a recipe with existing tag"""
 
