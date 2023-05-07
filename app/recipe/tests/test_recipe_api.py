@@ -372,7 +372,10 @@ class PrivateRecipeAPITests(TestCase):
     def test_create_recipe_with_existing_ingredient(self):
         """Test creating a recipe with existing ingredient"""
 
-        test_ingredient = Ingredient.objects.create(user=self.user, name='Salt')
+        test_ingredient = Ingredient.objects.create(
+            user=self.user,
+            name='Salt'
+        )
         payload = {
                 'title': 'Thai Prawn Curry',
                 'time_minutes': '30',
@@ -411,13 +414,21 @@ class PrivateRecipeAPITests(TestCase):
         self.assertIn(new_ingredient, recipe.ingredients.all())
 
     def test_update_recipe_assign_ingredient(self):
-        """Test assigning an existing ingredient when updating a recipe"""
+        """
+        Test assigning an existing ingredient when updating a recipe
+        """
 
-        breakfast_ingredient = Ingredient.objects.create(user=self.user, name='Salt')
+        breakfast_ingredient = Ingredient.objects.create(
+            user=self.user,
+            name='Salt'
+            )
         recipe = create_recipe(user=self.user)
         recipe.ingredients.add(breakfast_ingredient)
 
-        lunch_ingredient = Ingredient.objects.create(user=self.user, name='Pepper')
+        lunch_ingredient = Ingredient.objects.create(
+            user=self.user,
+            name='Pepper'
+        )
         payload = {
             'ingredients': [
                 {'name': 'Pepper'}
