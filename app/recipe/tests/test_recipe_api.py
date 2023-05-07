@@ -421,7 +421,7 @@ class PrivateRecipeAPITests(TestCase):
         breakfast_ingredient = Ingredient.objects.create(
             user=self.user,
             name='Salt'
-            )
+        )
         recipe = create_recipe(user=self.user)
         recipe.ingredients.add(breakfast_ingredient)
 
