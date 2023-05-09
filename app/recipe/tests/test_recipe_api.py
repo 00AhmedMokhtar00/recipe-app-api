@@ -3,7 +3,7 @@
 import os
 import tempfile
 
-from PIL import Image # Pillow library
+from PIL import Image  # Pillow library
 from decimal import Decimal
 
 from django.contrib.auth import get_user_model
@@ -470,14 +470,14 @@ class ImageUploadTests(TestCase):
 
     def setUp(self):  # runs before the test
         self.client = APIClient()
-        self.user = create_user(
+        self.user = get_user_model().objects.create_user(
             email='user@example.com',
             password='testpass123'
         )
         self.client.force_authenticate(self.user)
         self.recipe = create_recipe(user=self.user)
 
-    def tearDown(self): # runs after the test
+    def tearDown(self):  # runs after the test
         self.recipe.image.delete()
 
     def test_upload_image(self):
@@ -502,5 +502,3 @@ class ImageUploadTests(TestCase):
         res = self.client.post(url, payload, format='multipart')
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-
-
