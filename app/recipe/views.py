@@ -1,5 +1,11 @@
 """ Views for recipes APIs """
 
+from drf_spectacular.utils import (
+    extend_schema_view,
+    extend_schema,
+    OpenApiParameter,
+    OpenApiTypes,
+)
 from rest_framework import status, viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -9,18 +15,23 @@ from rest_framework.permissions import IsAuthenticated
 from core.models import Recipe, Tag, Ingredient
 from . import serializers
 
+
 @extend_schema_view(
     list=extend_schema(
         parameters=[
             OpenApiParameter(
                 'tags',
                 OpenApiTypes.STR,
-                description='Comma seperated list of IDs to filter recipes by tags'
+                description='''
+                Comma seperated list of IDs to filter recipes by tags
+                '''
             ),
             OpenApiParameter(
                 'ingredients',
                 OpenApiTypes.STR,
-                description='Comma seperated list of IDs to filter recipes by ingredients '
+                description='''
+                Comma seperated list of IDs to filter recipes by ingredients
+                '''
             ),
         ]
     )
@@ -51,7 +62,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return queryset.filter(
             user=self.request.user
         ).order_by('-id').distinct()
-
 
     def get_serializer_class(self):
         """Return the serializer class for request"""
