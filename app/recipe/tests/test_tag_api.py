@@ -85,6 +85,23 @@ class PrivateTagsApiTests(TestCase):
         self.assertEqual(res.data[0]['id'], tag.id)
         self.assertEqual(res.data[0]['name'], tag.name)
 
+    def test_create_tag(self):
+        """Test creating a tag"""
+
+        payload = {
+            'name': 'Sample Tag',
+        }
+        res = self.client.post(TAGS_URL, payload)
+
+        self.assertEqual(
+            res.status_code,
+            status.HTTP_201_CREATED
+        )
+        tag = Tag.objects.get(id=res.data['id'])
+        for k, v in payload.items():
+            self.assertEqual(getattr(tag, k), v)
+        self.assertEqual(tag.user, self.user)
+
     def test_update_tag(self):
         """Test updating a tag"""
 

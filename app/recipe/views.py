@@ -101,13 +101,18 @@ class RecipeViewSet(viewsets.ModelViewSet):
         ]
     )
 )
-class BaseRecipeAttrViewSet(mixins.UpdateModelMixin,
+class BaseRecipeAttrViewSet(mixins.CreateModelMixin,
+                            mixins.UpdateModelMixin,
                             mixins.DestroyModelMixin,
                             mixins.ListModelMixin,
                             viewsets.GenericViewSet):
     """Base viewset for recipe attributes"""
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        """Create a new Tag or Ingredient"""
+        serializer.save(user=self.request.user)
 
     def get_queryset(self):
         """Retrieve objects for authenticated users"""

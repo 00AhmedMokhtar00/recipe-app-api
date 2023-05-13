@@ -78,6 +78,23 @@ class PrivateIngredientsApiTests(TestCase):
         self.assertEqual(res.data[0]['name'], ingredient.name)
         self.assertEqual(res.data[0]['id'], ingredient.id)
 
+    def test_create_ingredient(self):
+        """Test creating an ingredient"""
+
+        payload = {
+            'name': 'Sample ingredient',
+        }
+        res = self.client.post(INGREDIENT_URL, payload)
+
+        self.assertEqual(
+            res.status_code,
+            status.HTTP_201_CREATED
+        )
+        ingredient = Ingredient.objects.get(id=res.data['id'])
+        for k, v in payload.items():
+            self.assertEqual(getattr(ingredient, k), v)
+        self.assertEqual(ingredient.user, self.user)
+
     def test_update_ingredient(self):
         """Test updating ingredient"""
 
